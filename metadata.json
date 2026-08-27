@@ -1,0 +1,6 @@
+{
+  "name": "Untitled UI Sign Up",
+  "description": "A pixel-perfect sign up screen mimicking the Untitled UI reference design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
