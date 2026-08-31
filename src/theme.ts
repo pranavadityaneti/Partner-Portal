@@ -137,7 +137,14 @@ const theme = createTheme({
     MuiCheckbox: {
       defaultProps: { disableRipple: true },
       styleOverrides: {
-        root: { padding: 0, color: grey[300], '&.Mui-checked': { color: brand.main } },
+        root: {
+          padding: 0,
+          color: grey[300],
+          '&.Mui-checked': { color: brand.main },
+          // MUI's size="small" renders a 20px glyph; the original was
+          // w-4 h-4 (16px). SvgIcon scales from font-size.
+          '& svg': { fontSize: 16 },
+        },
       },
     },
 
