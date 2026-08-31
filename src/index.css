@@ -1,10 +1,3 @@
-@import "tailwindcss";
+/* Urbanist is the app's typeface; the family is wired into the MUI theme
+   (see src/theme.ts) and applied to body by CssBaseline. */
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-
-@theme {
-  --font-sans: 'Urbanist', ui-sans-serif, system-ui, sans-serif;
-}
-
-body {
-  font-family: var(--font-sans);
-}
