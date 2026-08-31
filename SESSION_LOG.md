@@ -60,12 +60,19 @@ sits on a descendant with no transition. Re-measured with `transition: none`
 and the cascade is right. **When auditing CSS in this pane, disable transitions
 before measuring.**
 
-### Open threads — pre-existing, inherited, NOT fixed (need a decision)
-- **Contrast failures (WCAG AA needs 4.5 for normal text):**
-  encryption text #99A1AF on white = **2.6**; placeholder #99A1AF on #F9FAFB =
-  **2.49**; links #EA580C on white 13px = **3.56**; submit button white on
-  #EA580C at 16px/500 = **3.56**. All are the original brand colours; fixing
-  them changes the design.
+### Contrast + README (done, after the audit)
+- `bd29833` — all four AA failures fixed using colours already in the design:
+  CTA and links #EA580C -> #C2410C (3.56 -> 5.18); encryption line and
+  placeholders #99A1AF -> #6A7282 (2.60/2.49 -> 4.84/4.63). CTA hover steps to
+  #9A3412. **`primary.main` is now decorative-only** (logo, focus ring, icon
+  circles); text and the CTA use `primary.dark`. Keep that split.
+  Verified 8/8 text elements pass AA; document height unchanged (1071px).
+  MUI v9 removed colour-specific slots, so the override targets `contained`,
+  not `containedPrimary`.
+- `f82df32` — README rewritten; it had claimed React 18 + Tailwind + Framer
+  Motion and an "OTP-based authentication flow" that does not exist.
+
+### Open threads — pre-existing, NOT fixed (need a decision)
 - Heading order: `h2` (panel) precedes `h1` (form) in the DOM.
 - Inputs have no `name` and no `autocomplete` — form data will not serialise
   and browser autofill will not engage.
