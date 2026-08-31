@@ -72,10 +72,12 @@ const theme = createTheme({
     // metrics stay identical.
     h1: { fontSize: 32, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.5 },
     h2: { fontSize: 24, fontWeight: 400, letterSpacing: '0.025em', lineHeight: 1.375 },
-    h3: { fontSize: 20, fontWeight: 700, lineHeight: 1.5 },
+    h3: { fontSize: 20, fontWeight: 700, lineHeight: 1.4 }, // Tailwind text-xl
     body1: { fontSize: 16, lineHeight: 1.5 },
     body2: { fontSize: 14, lineHeight: 1.5 },
-    button: { fontSize: 16, fontWeight: 500, textTransform: 'none' },
+    // lineHeight 1.5 matches Tailwind's preflight. MUI's default of 1.75
+    // made the submit button 56px tall instead of 52px.
+    button: { fontSize: 16, fontWeight: 500, textTransform: 'none', lineHeight: 1.5 },
   },
 
   components: {
@@ -116,9 +118,16 @@ const theme = createTheme({
           },
         },
         input: {
-          padding: '12px 16px',
+          // 13/17 rather than 12/16: MUI's notched outline is an absolutely
+          // positioned fieldset that adds no layout height, so the original
+          // 1px border is absorbed into the padding. Keeps the field at 50px
+          // and the text at the same offset from the outer edge.
+          padding: '13px 17px',
           fontSize: 16,
           lineHeight: 1.5,
+          // MUI pins the input to height:1.4375em (23px), which overrides
+          // line-height and left the field 1px short of the original 50px.
+          height: '24px',
           color: grey[900],
           '&::placeholder': { color: grey[400], opacity: 1 },
         },
