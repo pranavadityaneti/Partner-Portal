@@ -10,10 +10,20 @@ import { createTheme } from '@mui/material/styles';
  */
 
 const brand = {
-  main: '#EA580C', // primary orange
-  dark: '#C2410C', // hover
+  main: '#EA580C', // primary orange — decorative use only (logo, focus ring, icon circles)
+  dark: '#C2410C', // text + CTA orange: 5.18:1 on white, passes WCAG AA
+  darker: '#9A3412', // CTA hover: 7.31:1
   light: '#FB923C', // offset circle behind loan-type icons
 } as const;
+
+/**
+ * #EA580C fails WCAG AA for text (3.56:1 against white, where 4.5 is
+ * required) both as link colour and as the CTA background behind white
+ * text. Text and the CTA therefore use brand.dark, which was already the
+ * hover shade; hover steps down to brand.darker, already present in the
+ * panel gradient. Decorative orange is unchanged — it carries no text and
+ * clears the 3:1 non-text threshold.
+ */
 
 const grey = {
   50: '#F9FAFB',
@@ -58,6 +68,9 @@ const theme = createTheme({
 
   palette: {
     primary: { main: brand.main, dark: brand.dark, light: brand.light, contrastText: '#FFFFFF' },
+    // grey[400] failed AA (2.60 on white, 2.49 on the field fill); grey[500]
+    // reaches 4.84 / 4.63 and is already used for the subtitle and footer.
+    // (see placeholder + encryption-line overrides below)
     grey,
     text: { primary: grey[900], secondary: grey[500] },
     divider: grey[100],
@@ -91,10 +104,13 @@ const theme = createTheme({
       defaultProps: { disableElevation: true, disableRipple: true },
       styleOverrides: {
         root: { borderRadius: radius.field, textTransform: 'none', fontWeight: 500 },
+        // MUI v9 removed colour-specific slots (containedPrimary); this app
+        // has a single contained CTA, so scoping by variant is sufficient.
         contained: {
           boxShadow: shadow.sm,
           padding: '14px 16px',
-          '&:hover': { boxShadow: shadow.sm, backgroundColor: brand.dark },
+          backgroundColor: brand.dark,
+          '&:hover': { boxShadow: shadow.sm, backgroundColor: brand.darker },
         },
       },
     },
@@ -129,7 +145,7 @@ const theme = createTheme({
           // line-height and left the field 1px short of the original 50px.
           height: '24px',
           color: grey[900],
-          '&::placeholder': { color: grey[400], opacity: 1 },
+          '&::placeholder': { color: grey[500], opacity: 1 }, // grey[400] was 2.49:1
         },
       },
     },

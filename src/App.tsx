@@ -236,7 +236,7 @@ export default function App() {
                     sx={{ ...fieldSx, pl: '17px', '& .MuiOutlinedInput-input': { pl: 0 } }}
                     startAdornment={
                       <InputAdornment position="start" sx={{ mr: '7px' }}>
-                        <Search size={20} color="#99A1AF" />
+                        <Search size={20} color="#6A7282" />
                       </InputAdornment>
                     }
                   />
@@ -249,8 +249,8 @@ export default function App() {
                 </Box>
                 <Typography component="label" htmlFor="consent" sx={{ fontSize: 13, color: 'grey.600', lineHeight: 1.625, cursor: 'pointer' }}>
                   I authorize Recur Club &amp; its lending partners to fetch my credit report. I agree to the{' '}
-                  <Link href="#" sx={{ color: 'primary.main' }}>Terms of Service</Link> &amp;{' '}
-                  <Link href="#" sx={{ color: 'primary.main' }}>Privacy Policy</Link>.
+                  <Link href="#" sx={{ color: 'primary.dark' }}>Terms of Service</Link> &amp;{' '}
+                  <Link href="#" sx={{ color: 'primary.dark' }}>Privacy Policy</Link>.
                 </Typography>
               </Stack>
 
@@ -260,7 +260,7 @@ export default function App() {
                 </Button>
               </Box>
 
-              <Stack direction="row" spacing={0.75} sx={{ alignItems: 'center', justifyContent: 'center', mt: 3, color: 'grey.400' }}>
+              <Stack direction="row" spacing={0.75} sx={{ alignItems: 'center', justifyContent: 'center', mt: 3, color: 'grey.500' }}>
                 <Lock size={16} />
                 <Typography sx={{ fontSize: 13, fontWeight: 500 }}>256-bit bank-level encryption</Typography>
               </Stack>
@@ -271,7 +271,7 @@ export default function App() {
             variant="text"
             endIcon={<ChevronRight size={16} />}
             sx={{
-              mt: 3, mb: 6, fontSize: 15, color: 'primary.main',
+              mt: 3, mb: 6, fontSize: 15, color: 'primary.dark',
               p: 0, minWidth: 0,
               '& .MuiButton-endIcon': { ml: '6px' },
               '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' },
@@ -300,7 +300,7 @@ export default function App() {
                   sx={{
                     display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
                     cursor: 'pointer', flexShrink: 0, width: 110,
-                    '&:hover .loan-label': { color: 'primary.main' },
+                    '&:hover .loan-label': { color: 'primary.dark' },
                   }}
                 >
                   <OffsetIcon Icon={loan.icon} />
