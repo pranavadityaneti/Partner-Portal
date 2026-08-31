@@ -1,6 +1,6 @@
 # Partner Portal — Session Log
 
-## 2026-08-31 — Tailwind → MUI migration (branch `feat/mui-migration`, unpushed)
+## 2026-08-31 — Tailwind → MUI migration (**merged to `main`**)
 
 **Goal:** rebuild the sign-up screen on MUI instead of Tailwind, preserving the
 design exactly, and fix the broken tablet layout.
@@ -18,6 +18,31 @@ design exactly, and fix the broken tablet layout.
 | `a8b6871` | 4 | `src/theme.ts` + ThemeProvider (no CssBaseline yet) |
 | `df1eec2` | 5 | Rewrote `App.tsx` in MUI; fixed responsive layout |
 | `047e1c4` | 6 | Removed Tailwind, added CssBaseline |
+| `71d2d6a` | 7 | Checkbox 20px -> 16px (audit finding) |
+| `bd29833` | — | All text contrast raised to WCAG AA |
+| `f82df32` | — | README corrected to match the code |
+
+### Merged
+PR #1 <https://github.com/pranavadityaneti/Partner-Portal/pull/1> merged
+2026-08-31 12:54 UTC as merge commit `646205d`. A **merge commit, not a squash**
+— the individual messages carry the reasoning (why the font import broke, why
+`primary.main` is decorative-only, why input padding is 13/17) and squashing
+would have flattened it.
+
+`main` went from `a603bdb` to `646205d` (12 commits). The
+`feat/mui-migration` branch was left on the remote as a safety net, not deleted.
+
+**Post-merge verification on a clean checkout of `main`** (deleted
+`node_modules` and `dist` first): `npm ci` from the committed lockfile
+succeeded with 0 vulnerabilities — which validates the lockfile that the repo
+previously lacked; `tsc --noEmit` and `npm run build` both exit 0; 9/9 rendered
+checks pass (Urbanist loads, docH 1071, input 50px, button 52px, CTA
+rgb(194,65,12), checkbox 16px, panel 640px, header 80px, footer 64px).
+
+**Deploy status unknown.** The repo has no CI, no `vercel.json` and no
+`.vercel`, but a Vercel project can be linked entirely through the dashboard
+with nothing in the repo — so whether this merge triggered a production deploy
+could not be determined from here. Check the Vercel dashboard.
 
 ### Findings worth remembering
 1. **`tsc --noEmit` was a no-op for React.** No `@types/react` was installed and
@@ -60,6 +85,11 @@ sits on a descendant with no transition. Re-measured with `transition: none`
 and the cascade is right. **When auditing CSS in this pane, disable transitions
 before measuring.**
 
+This bit twice: post-merge, the testimonial card screenshotted blank. The text
+was in the DOM at `opacity: 0` with its transform frozen mid-flight — the same
+non-compositing pane stalling a motion animation, not a regression. Verify
+animated UI by reading the DOM, never from a screenshot of this pane.
+
 ### Contrast + README (done, after the audit)
 - `bd29833` — all four AA failures fixed using colours already in the design:
   CTA and links #EA580C -> #C2410C (3.56 -> 5.18); encryption line and
@@ -86,10 +116,8 @@ before measuring.**
 - Vite warns the JS chunk exceeds 500 kB (single chunk, no code splitting).
 
 ### Other open threads
-- Nothing pushed to GitHub; `main` untouched.
 - Form is still non-functional — no input state, no validation, "Get OTP" does
   nothing. Out of scope for the migration; separate decision.
 - `tsconfig.json` has `strict` off. Turning it on would harden the project but
   may surface pre-existing errors.
 - Dead deps untouched: `@google/genai`, `express`, `dotenv`, `autoprefixer`.
-- README still says "React 18" and "Tailwind CSS"; both now wrong.
